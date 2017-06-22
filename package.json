@@ -1,0 +1,30 @@
+{
+  "name": "coov.me",
+  "version": "0.0.1",
+  "description": "个人网站",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel ./ -d _build --ignore node_modules,public,temp,bin",
+    "dev": "devtool bin/www app,db,lib,model,service,websocket,config.js,index.js --watch --no-browser-globals",
+    "dev-chrome": "node --inspect-brk bin/www"
+  },
+  "keywords": [
+    "koa"
+  ],
+  "author": "wu",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.2.0",
+    "koa-router": "^7.2.0",
+    "koa-static": "^3.0.0",
+    "pug": "^2.0.0-rc.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "eslint": "^4.0.0",
+    "eslint-config-google": "^0.8.0"
+  }
+}

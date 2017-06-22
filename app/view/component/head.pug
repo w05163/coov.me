@@ -1,0 +1,18 @@
+doctype html
+html
+	head
+		meta(name="renderer" content="webkit")//- 双内核浏览器使用webkit内核渲染
+		meta(name="robots" content="index,follow")//- 允许抓取本页，允许跟踪链接
+		meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")//- 让ie以最高级别渲染，或者提示chrome插件
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+		meta(name="viewport" content="initial-scale=1.0, user-scalable=no")
+		meta(http-equiv="Window-target" content="_top")//- 用来防止别人在框架里调用自己的页面
+		meta(name="viewport" content="initial-scale=1.0, user-scalable=no")
+		link(rel="apple-touch-icon" href="ico.png")
+		meta(name="theme-color" content=head.themeColor || _pageConfig.themeColor)//- 设置chrome导航栏颜色
+		each val, index in head.meta
+			meta(name=index content=val)
+		title #{head.title}
+
+	
