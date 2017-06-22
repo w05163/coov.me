@@ -19,7 +19,7 @@ function transformToStandard({ path, template, params, fun }) {
 		fun: ctx => {
 			const newParams = typeof fun === 'function' ? fun(ctx) : null;
 			ctx.body = compiledFunction(
-				Object.assign({}, params, newParams, { _pageConfig: config.page })
+				Object.assign({}, params, newParams, { coov: config.page })
 			);
 		}
 	};
@@ -40,6 +40,19 @@ const main = [
 			}
 		},
 		fun: ctx => null // 可选，返回模板需要的参数对象，返回的对象将会和params混合后传入渲染模板
+	},
+	{
+		path: '/xgs',
+		template: 'xgs/xgs.pug',
+		params: {
+			head: {
+				title: '你个蠢视频',
+				meta: {
+					keywords: 'webrtc,网页视频聊天,视频聊天,无插件',
+					description: '基于webrtc的网页视频聊天应用'
+				}
+			}
+		}
 	}
 ];
 

@@ -1,0 +1,38 @@
+//- 你个蠢视频聊天
+extends ../component/head.pug
+
+block scripts
+	- coov.staticPath = 'https://coov.me/rtc/'
+	link(rel="stylesheet" type="text/css" media="screen" href=coov.staticPath + "css/j.css")
+	script(src=coov.staticPath + "../js/j.js")
+	script(src=coov.staticPath + "js/webrtc.js" defer="defer")
+	script(src=coov.staticPath + 'js/material.js' defer="defer")
+	script(src=coov.staticPath + "js/xgs.js" defer="defer")
+	style
+		include xgs.css
+block body
+	body(class="dark-theme")
+		div(class="xgj")
+			div(id="xgj_alert") 你好，我是西瓜精！
+			img(id="xgj" src=coov.staticPath + "img/xgj.png")
+			div(class="fab_view")
+				button(class="fab color-blue-500" id="send_file")
+					i(class="icon-folder")
+			div(class="fab_view")
+				button(class="fab color-blue-500" id="send_img")
+					i(class="icon-drive-image")
+			div(class="fab_view")
+				p(style="margin-bottom: 0;text-align: center;") 不受新加入者打扰
+				button(class="fab color-blue-500" id="close_connect")
+					i(class="icon-notifications-off")
+		div(id="media-list")
+		div(id="input")
+			div(class="text-input-container card")
+				input(type="text" class="text-input" id="key" placeholder="请输入一句话" style="line-height: 1.3em;")
+			button(class="button raised bg-blue-500 color-white" id="ok") 确定
+		div(id="tmbox")
+			div(class="card_view")
+				input(type="text" class="text-input card" id="msg" placeholder="发送弹幕" style="line-height: 1.3em;")
+		button(id="fab" class="fab bg-blue-500 color-white")
+			i(class="icon-create")
+		div(class="notthink")

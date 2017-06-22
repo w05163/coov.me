@@ -10,9 +10,9 @@ html
 		meta(http-equiv="Window-target" content="_top")//- 用来防止别人在框架里调用自己的页面
 		meta(name="viewport" content="initial-scale=1.0, user-scalable=no")
 		link(rel="apple-touch-icon" href="ico.png")
-		meta(name="theme-color" content=head.themeColor || _pageConfig.themeColor)//- 设置chrome导航栏颜色
+		meta(name="theme-color" content=head.themeColor || coov.themeColor)//- 设置chrome导航栏颜色
 		each val, index in head.meta
 			meta(name=index content=val)
 		title #{head.title}
-
-	
+		block scripts
+	block body
