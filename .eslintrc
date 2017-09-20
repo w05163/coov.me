@@ -1,11 +1,15 @@
 {
-    "extends": "google",
+	"extends": "google",
+	"env": {
+        "browser": true,
+        "node": true
+    },
     "parserOptions": {
-        "ecmaVersion": 6,
+        "ecmaVersion": 8,
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
-        }
+		}
     },
     "rules": {
         "semi": 2,
@@ -17,6 +21,11 @@
         "indent": [1, "tab"],
 		"spaced-comment": 1,
 		"no-trailing-spaces": 1,
-		"object-curly-spacing": [1, "always"]
+		"object-curly-spacing": [1, "always"],
+		"no-undef": 2,
+		"prefer-const": 1,
+		"space-infix-ops": 2,
+		"no-invalid-this": 0,
+		"max-len": [1, 100]
     }
 }
