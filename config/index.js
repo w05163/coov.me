@@ -12,5 +12,6 @@ export default {
 		backlog: 1000, // 等待连接的最大数量
 		maxPayload: 1024 * 1024 * 2, // 单个massage的最大长度
 		interval: 30 * 1000, // 心跳包间隔
+		events: ['register', 'cancel', 'msg', 'request'], // 客户端允许发送的事件
 	}
 };

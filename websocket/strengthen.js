@@ -5,6 +5,8 @@
 export default function strengthen(socket) {
 	socket.sendObj = sendObj;
 	socket.emitEvent = emit;
+	socket.sendError = sendError;
+	socket.services = [];
 }
 
 /**
@@ -25,6 +27,21 @@ function emit(event, ...args) {
 		type: 'event',
 		event,
 		args
+	});
+}
+
+/**
+ * 发送错误信息
+ * @param {String} msg
+ * @param {String} service
+ * @param {String} id
+ */
+function sendError(msg, service, id) {
+	this.sendObj({
+		type: 'error',
+		service,
+		id,
+		data: msg
 	});
 }
 
