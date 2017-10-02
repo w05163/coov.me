@@ -11,7 +11,7 @@ export default {
 	ws: { // websocket用到的配置
 		backlog: 1000, // 等待连接的最大数量
 		maxPayload: 1024 * 1024 * 2, // 单个massage的最大长度
-		interval: 5 * 1000, // 心跳包间隔
+		interval: 30 * 1000, // 心跳包间隔
 		types: ['register', 'cancel', 'msg', 'request'], // 客户端允许发送的事件
 	}
 };

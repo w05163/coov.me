@@ -27,6 +27,7 @@
 		"space-infix-ops": 2,
 		"no-invalid-this": 0,
 		"max-len": [1, 100],
-		"no-const-assign": 2
+		"no-const-assign": 2,
+		"require-jsdoc": 0
     }
 }

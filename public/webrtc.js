@@ -1,12 +1,12 @@
-let webrtc = function() {
-	let PeerConnection = (window.PeerConnection || window.webkitPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection);
+const webrtc = function() {
+	const PeerConnection = (window.PeerConnection || window.webkitPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection);
 	window.URL = (window.URL || window.webkitURL || window.msURL || window.oURL);
 	navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-	let nativeRTCIceCandidate = (window.mozRTCIceCandidate || window.RTCIceCandidate);
-	let nativeRTCSessionDescription = (window.mozRTCSessionDescription || window.RTCSessionDescription); // order is very important: "RTCSessionDescription" defined in Nighly but useless
-	let moz = !!navigator.mozGetUserMedia;
+	const nativeRTCIceCandidate = (window.mozRTCIceCandidate || window.RTCIceCandidate);
+	const nativeRTCSessionDescription = (window.mozRTCSessionDescription || window.RTCSessionDescription); // order is very important: "RTCSessionDescription" defined in Nighly but useless
+	const moz = !!navigator.mozGetUserMedia;
 
-	let packetSize = 1024;
+	const packetSize = 1024;
 
 	function errHandler(event) {
 		console.log(event);
@@ -42,19 +42,20 @@ let webrtc = function() {
 	};
 	// 移除事件监听,第二参数可以是function对象，也可以是on方法所返回的整数
 	EventEmitter.prototype.off = function(eventName, callback) {
-		let events = this.events[eventName];
+		const events = this.events[eventName];
 		if (!events) {
 			return;
 		}
-		if (typeof callback == 'function')
-			{for(var i=0;i<events.length;i++){
-                if(events[i]==callback){
-                    events.splice(i,1);
-                    return;
-                }
-            }}
-		else
-			{events.splice(callback,1);}
+		if (typeof callback == 'function') {
+			for (let i = 0; i < events.length; i++) {
+				if (events[i] == callback) {
+					events.splice(i, 1);
+					return;
+				}
+			}
+		} else {
+			events.splice(callback, 1);
+		}
 	};
 
 
@@ -132,7 +133,7 @@ let webrtc = function() {
 		};
 
 		socket.onmessage = function(message) {
-			let json = JSON.parse(message.data);
+			const json = JSON.parse(message.data);
 			if (json.eventName) {
 				that.emit(json.eventName, json.data);
 			} else {
@@ -151,15 +152,15 @@ let webrtc = function() {
 		this.on('_peers', function(data) {// 给服务器发送__join事件的返回
 			that.connections = data.connections;// 房间里所有的socket id(数组)
 			that.me = data.you;// 自己的socket id（由uuid生成）
-			if (data.token)
-				{that.getIceServers(data.token, function (iceServer) {
-                    socket.send(JSON.stringify({
-                        "eventName": "__ice_service",
-                        "data": iceServer
-                    }));
-                    that.setIceServers(iceServer,socket);
-                });}
-			else if (data.iceServer) {
+			if (data.token) {
+				that.getIceServers(data.token, function(iceServer) {
+					socket.send(JSON.stringify({
+						'eventName': '__ice_service',
+						'data': iceServer
+					}));
+					that.setIceServers(iceServer, socket);
+				});
+			} else if (data.iceServer) {
 				that.setIceServers(data.iceServer, socket);
 			}
 		});
@@ -168,8 +169,8 @@ let webrtc = function() {
 		});
 
 		this.on('_ice_candidate', function(data) {// 收到服务器发来的对端网络地址描述
-			let candidate = new nativeRTCIceCandidate(data);
-			let pc = that.peerConnections[data.socketId];
+			const candidate = new nativeRTCIceCandidate(data);
+			const pc = that.peerConnections[data.socketId];
 			pc.addIceCandidate(candidate);
 			that.emit('get_ice_candidate', candidate);
 		});
@@ -223,9 +224,9 @@ let webrtc = function() {
 		this.socket.close();
 	};
 	webrtc.prototype.getIceServers = function(token, callback) {// 去获取实时猫的trun服务器临时用户名和密码
-		let _url = 'wss://signal.realtimecat.com:3000/?tokenId=' + token + '&encrypt=false&type=p2p';
-		let _protocols = 'rtcat-protocol';
-		let _wss = new WebSocket(_url, _protocols);
+		const _url = 'wss://signal.realtimecat.com:3000/?tokenId=' + token + '&encrypt=false&type=p2p';
+		const _protocols = 'rtcat-protocol';
+		const _wss = new WebSocket(_url, _protocols);
 		_wss.onopen = function() {
 			console.log('打开了');
 			_wss.send(JSON.stringify({
@@ -234,7 +235,7 @@ let webrtc = function() {
 		};
 		_wss.onmessage = function(message) {
 			console.log('收到信息', message);
-			let msg = JSON.parse(message.data);
+			const msg = JSON.parse(message.data);
 			callback(msg.data.iceServers);
 			this.close();
 		};
@@ -260,7 +261,7 @@ let webrtc = function() {
 
 	// 创建本地流
 	webrtc.prototype.createStream = function(options) {// 与服务器建立socket连接之后
-		let that = this;
+		const that = this;
 
 		options.video = !!options.video;
 		options.audio = !!options.audio;
@@ -294,7 +295,7 @@ let webrtc = function() {
 	};
 	webrtc.prototype.close = function() {
 		that.localMediaStream.close();
-		let pcs = that.peerConnections;
+		const pcs = that.peerConnections;
 		for (i = pcs.length; i--;) {
 			that.closePeerConnection(pcs[i]);
 		}
@@ -336,14 +337,14 @@ let webrtc = function() {
 
 	// 接收到Offer类型信令后作为回应返回answer类型信令
 	webrtc.prototype.receiveOffer = function(socketId, sdp) {
-		let pc = this.peerConnections[socketId];
+		const pc = this.peerConnections[socketId];
 		this.sendAnswer(socketId, sdp);
 	};
 
 	// 发送answer类型信令
 	webrtc.prototype.sendAnswer = function(socketId, sdp) {
-		let pc = this.peerConnections[socketId];
-		let that = this;
+		const pc = this.peerConnections[socketId];
+		const that = this;
 		pc.setRemoteDescription(new nativeRTCSessionDescription(sdp), function() {
 			pc.createAnswer(function(session_desc) {// 生成answer并发送给服务器转发，对端接受到一个_answer事件
 				pc.setLocalDescription(session_desc, function() {
@@ -361,7 +362,7 @@ let webrtc = function() {
 
 	// 接收到answer类型信令后将对方的session描述写入PeerConnection中
 	webrtc.prototype.receiveAnswer = function(socketId, sdp) {
-		let pc = this.peerConnections[socketId];
+		const pc = this.peerConnections[socketId];
 		pc.setRemoteDescription(new nativeRTCSessionDescription(sdp), _null, errHandler);// 把answer写入
 	};
 
@@ -379,8 +380,8 @@ let webrtc = function() {
 
 	// 创建单个PeerConnection
 	webrtc.prototype.createPeerConnection = function(socketId) {
-		let that = this;
-		let pc = new PeerConnection(webrtc.iceServer);
+		const that = this;
+		const pc = new PeerConnection(webrtc.iceServer);
 		this.peerConnections[socketId] = pc;// 保存到pc数组里
 		pc.onicecandidate = function(evt) {// 会产生几个网络候选地址，所以这个事件会触发多次
 			if (evt.candidate) {// 得到地址的描述信息
@@ -519,7 +520,7 @@ let webrtc = function() {
 
 	// 为Data channel绑定相应的事件回调函数
 	webrtc.prototype.addDataChannel = function(socketId, channel) {
-		let that = this;
+		const that = this;
 		channel.onopen = function() {
 			that.emit('data_channel_opened', channel, socketId);
 		};
@@ -538,7 +539,7 @@ let webrtc = function() {
 			}
 			if (!json.type) {
 				that._msgEventEmitter.emit('msg', json.data, socketId);
-			}else {
+			} else {
 				that._msgEventEmitter.emit(json.type, json.data, socketId);
 			}
 		};
@@ -654,7 +655,7 @@ let webrtc = function() {
 			this.sendFileChunks._timeId = setTimeout(function() {
 				that.sendFileChunks();
 			}, 10);
-		} else{
+		} else {
 			delete this.sendFileChunks._timeId;
 		}
 	};
@@ -700,9 +701,10 @@ let webrtc = function() {
 		let that = this,
 			fileToSend = that.fileChannels[socketId][sendId],
 			file = that.filesToSend[sendId];
-		let startSendFile = function() {
-			if (fileToSend.state != 'ask')
-				{return;}
+		const startSendFile = function() {
+			if (fileToSend.state != 'ask') {
+				return;
+			}
 			fileToSend.state = 'send';
 			fileToSend.sendedPackets = 0;
 			fileToSend.percent = -1;
@@ -713,13 +715,13 @@ let webrtc = function() {
 		};
 		if (file && file.fileData) {// 如果文件已经读取过了
 			startSendFile();
-		}else {
-			let initSending = function(event, text) {
+		} else {
+			const initSending = function(event, text) {
 				file.packetsToSend = parseInt(event.target.result.length / packetSize, 10);
 				file.fileData = event.target.result;
 				startSendFile();
 			};
-			let reader = new window.FileReader(fileToSend.file);
+			const reader = new window.FileReader(fileToSend.file);
 			reader.readAsDataURL(fileToSend.file);
 			reader.onload = initSending;
 		}
@@ -728,7 +730,7 @@ let webrtc = function() {
 
 	// 发送文件请求后若对方拒绝接受,清除掉本地的文件信息
 	webrtc.prototype.receiveFileRefuse = function(sendId, socketId) {
-		let that = this;
+		const that = this;
 		that.fileChannels[socketId][sendId].state = 'refused';
 		that.emit('send_file_refused', sendId, socketId, that.fileChannels[socketId][sendId].file);
 		that.cleanSendFile(sendId, socketId);
@@ -743,7 +745,7 @@ let webrtc = function() {
 			if (that.fileChannels[socketId][sendId] && (that.fileChannels[socketId][sendId].state === 'refused' || that.fileChannels[socketId][sendId].state === 'end')) {
 				// 如果状态为拒绝接收，或者发送完成
 				delete that.fileChannels[socketId][sendId];
-			} else{
+			} else {
 				fileCanDelete = false;// 不能删除文件
 			}
 		}
@@ -754,7 +756,7 @@ let webrtc = function() {
 
 	// 发送文件请求
 	webrtc.prototype.sendAsk = function(socketId, sendId, fileToSend) {
-		let packet = {
+		const packet = {
 			name: fileToSend.file.name,
 			size: fileToSend.file.size,
 			sendId: sendId,
@@ -765,7 +767,7 @@ let webrtc = function() {
 
 	// 发送途中取消文件发送
 	webrtc.prototype.cancelFileSend = function(socketId, sendId) {
-		let packet = {
+		const packet = {
 			sendId: sendId,
 			signal: 'cancel_send'
 		};
@@ -790,7 +792,7 @@ let webrtc = function() {
 			// 传输丢包了
 			console.log('文件迷路了 T_T...packet.id:' + packet.id + '\nfileInfo.packetId:' + fileInfo.packetId);
 			fileInfo.packetId = packet.id;
-		} else{
+		} else {
 			fileInfo.packetId = packet.id;
 		}
 		if (!fileInfo.data) {
@@ -820,7 +822,7 @@ let webrtc = function() {
 				cancelable: true
 			});
 		if (!fileInfo) return;
-		let blob = this.getFile(sendId);
+		const blob = this.getFile(sendId);
 		hyperlink.href = window.URL.createObjectURL(blob);
 		hyperlink.target = '_blank';
 		hyperlink.download = fileInfo.name;
@@ -832,9 +834,9 @@ let webrtc = function() {
 	};
 	// 根据sendId返回一个blob对象
 	webrtc.prototype.getFile = function(sendId) {
-		let fileInfo = this.receiveFiles[sendId];
+		const fileInfo = this.receiveFiles[sendId];
 		if (!fileInfo) return;
-		let dataurl = fileInfo.data;
+		const dataurl = fileInfo.data;
 		let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
 			bstr = window.atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
 		while (n--) {
@@ -846,7 +848,7 @@ let webrtc = function() {
 
 	// 接收到发送文件请求后记录文件信息
 	webrtc.prototype.receiveFileAsk = function(sendId, fileName, fileSize, socketId) {
-		let that = this;
+		const that = this;
 		that.receiveFiles[sendId] = {
 			socketId: socketId,
 			state: 'ask',
@@ -860,7 +862,7 @@ let webrtc = function() {
 
 	// 发送同意接收文件信令
 	webrtc.prototype.sendFileAccept = function(sendId, socketId) {
-		let packet = {
+		const packet = {
 			signal: 'accept',
 			sendId: sendId
 		};
@@ -881,7 +883,7 @@ let webrtc = function() {
 
 	// 发送途中取消接收文件
 	webrtc.prototype.cancelFileReceive = function(socketId, sendId) {
-		let packet = {
+		const packet = {
 			sendId: sendId,
 			signal: 'cancel_receive'
 		};
@@ -891,7 +893,7 @@ let webrtc = function() {
 
 	// 清除接受文件缓存
 	webrtc.prototype.cleanReceiveFile = function(sendId) {
-		let that = this;
+		const that = this;
 		delete that.receiveFiles[sendId];
 	};
 	webrtc.iceServer = {

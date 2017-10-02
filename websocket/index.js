@@ -37,6 +37,7 @@ export default function init(app) {
 	});
 
 	server.on('connection', function(socket, b, c) {
+		debugger;
 		socket.id = randomString(6);
 		server.clientObj[socket.id] = socket;
 		strengthen(socket);
