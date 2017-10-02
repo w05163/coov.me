@@ -17,20 +17,30 @@ const message = {
 /**
  * 添加基本监听
  * @param {socket} socket
+ * @param {server} server
  */
-export default function listen(socket) {
+export default function listen(socket, server) {
 	socket.on('message', handleMessage);
 	socket.on('close', function(reason) {
 		// 完全断开连接
 		this.services.forEach(t=>t.cancel(this));
+		delete server.clientObj[this.id];
 	});
 
 	socket.on('register', register);
 	socket.on('cancel', cancel);
 	socket.on('msg', handleMsg);
 	socket.on('request', handleRequest);
+	socket.on('pong', receivePong);
 }
 
+/**
+ * 接收到心跳包
+ * @param {*} data
+ */
+function receivePong(data) {
+	this.isAlive = true;
+}
 
 /**
  * 预处理message
@@ -45,7 +55,10 @@ function handleMessage(data) {
 			this.sendError('非法数据');
 		}
 
-		if (!types.includes(message.type)) return;
+		if (!types.includes(message.type)) {
+			this.sendError('非法的消息类型');
+			return;
+		}
 		this.emit(message.type, message);
 	} else {
 		// 二进制数据

@@ -1,4 +1,4 @@
-
+import ws from 'ws';
 
 let server = null;
 /**
@@ -12,6 +12,7 @@ export default class Operator {
 	constructor(serviceName) {
 		this.serviceName = serviceName;
 		this.roomObj = {};// 房间名为key，socketId数组为value
+		this.sToR = {};// 每个id加入的房间
 	}
 
 	/**
@@ -22,6 +23,18 @@ export default class Operator {
 	join(id, room) {
 		this.roomObj[room] = this.roomObj[room] || [];
 		if (!this.roomObj[room].includes(id)) this.roomObj[room].push(id);
+		this.sToR[id] = this.sToR[id] || [];
+		this.sToR[id].push(room);
+	}
+
+	/**
+	 * 退出房间
+	 * @param {*} id
+	 * @param {*} room
+	 */
+	leave(id, room) {
+		if (!this.roomObj[room] || !this.roomObj[room].includes(id)) return;
+		this.roomObj[room] = this.roomObj[room].filter(i=>i !== id);
 	}
 
 	/**
@@ -30,7 +43,7 @@ export default class Operator {
 	 * @param {*} args
 	 */
 	send(id, ...args) {
-
+		const socket = server.clientObj[id];
 	}
 
 	/**
@@ -41,6 +54,24 @@ export default class Operator {
 	broadcast(room, ...args) {
 		const rooms = this.roomObj[room];
 		rooms.forEach(id=>this.send(id, ...args));
+	}
+
+	/**
+	 * 获取指定socket加入的所有房间
+	 * @param {String} id
+	 * @return {Array}
+	 */
+	getSocketRooms(id) {
+		return this.sToR[id] ? this.sToR[id].concat() : [];
+	}
+
+	/**
+	 * 获取房间内所有socket的id
+	 * @param {String} room
+	 * @return {Array}
+	 */
+	getRoom(room) {
+		return this.roomObj[room] ? this.roomObj[room].concat() : [];
 	}
 }
 

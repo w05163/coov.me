@@ -41,3 +41,5 @@ class serviceBase {
 		return true;
 	}
 }
+
+export default serviceBase;

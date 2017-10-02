@@ -22,8 +22,8 @@ function forRouters(routers) {
 
 forRouters(main);
 
-for (let key in routerObj) {
-	let tem = supplementPath(routerObj[key], 'path', '', key);
+for (const key in routerObj) {
+	const tem = supplementPath(routerObj[key], 'path', '', key);
 	forRouters(tem);
 }
 

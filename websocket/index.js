@@ -8,7 +8,6 @@ import strengthen from './strengthen';
 import listen from './listen';
 import { init as operatorInit } from './operator';
 
-const server = null;
 
 /**
  * 初始化方法
@@ -16,9 +15,8 @@ const server = null;
  * @return {server}
  */
 export default function init(app) {
-	server = new ws.Server({
+	const server = new ws.Server({
 		server: app,
-		port: config.port,
 		backlog: config.ws.backlog,
 		maxPayload: config.ws.maxPayload
 	});
@@ -38,11 +36,11 @@ export default function init(app) {
 		global.clearInterval(intervalId);
 	});
 
-	server.on('connection', function(socket) {
+	server.on('connection', function(socket, b, c) {
 		socket.id = randomString(6);
 		server.clientObj[socket.id] = socket;
 		strengthen(socket);
-		listen(socket);
+		listen(socket, server);
 	});
 
 	operatorInit(server);
