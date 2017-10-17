@@ -70,7 +70,7 @@ function handleMessage(data) {
  * @param {String} service 服务名称
  * @param {*} [params] 其余参数
  */
-async function register({ service, data }) {
+async function register({ service, data, id }) {
 	if (this.services.includes(service)) return;
 	const target = services[service];
 	if (!target) return;
@@ -78,7 +78,7 @@ async function register({ service, data }) {
 	if (res || typeof res === 'undefinde') { // 不返回则默认成功；
 		this.services.push(service);
 	} else {
-		this.sendError(res, service);
+		this.sendError(res, service, id);
 	}
 }
 
