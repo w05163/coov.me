@@ -34,26 +34,38 @@ export default class Operator {
 	 */
 	leave(id, room) {
 		if (!this.roomObj[room] || !this.roomObj[room].includes(id)) return;
-		this.roomObj[room] = this.roomObj[room].filter(i=>i !== id);
+		this.roomObj[room] = this.roomObj[room].filter(i => i !== id);
 	}
 
 	/**
 	 * 向指定socket发送消息
 	 * @param {String} id
-	 * @param {*} args
+	 * @param {Object} data
 	 */
-	send(id, ...args) {
+	send(id, data) {
 		const socket = server.clientObj[id];
+		if (!socket) return;
+		socket.sendObj({
+			service: this.serviceName,
+			data,
+			type: 'msg'
+		});
 	}
 
 	/**
 	 * 向房间广播
 	 * @param {String} room 房间名
-	 * @param {*} args
+	 * @param {Object} data
+	 * @param {Array} excludeIds
 	 */
-	broadcast(room, ...args) {
+	broadcast(room, data, excludeIds) {
+		if (typeof excludeIds === 'string') {
+			excludeIds = [excludeIds];
+		}
 		const rooms = this.roomObj[room];
-		rooms.forEach(id=>this.send(id, ...args));
+		rooms.forEach((id) => {
+			if (!excludeIds.includes(id)) this.send(id, data);
+		});
 	}
 
 	/**

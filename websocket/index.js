@@ -25,7 +25,7 @@ export default function init(app) {
 
 	// 定时发送ping包检测
 	const intervalId = global.setInterval(() => {
-		server.clients.forEach(ws => {
+		server.clients.forEach((ws) => {
 			if (ws.isAlive === false) return ws.terminate();
 			ws.isAlive = false;
 			ws.ping('', false, true);
@@ -36,8 +36,7 @@ export default function init(app) {
 		global.clearInterval(intervalId);
 	});
 
-	server.on('connection', function(socket, b, c) {
-		debugger;
+	server.on('connection', (socket, b, c) => {
 		socket.id = randomString(6);
 		server.clientObj[socket.id] = socket;
 		strengthen(socket);

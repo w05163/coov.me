@@ -21,9 +21,9 @@ const message = {
  */
 export default function listen(socket, server) {
 	socket.on('message', handleMessage);
-	socket.on('close', function(reason) {
+	socket.on('close', function handleClose(reason) {
 		// 完全断开连接
-		this.services.forEach(t=>t.cancel(this));
+		this.services.forEach(t => services[t].cancel(this));
 		delete server.clientObj[this.id];
 	});
 
@@ -75,7 +75,7 @@ async function register({ service, data, id }) {
 	const target = services[service];
 	if (!target) return;
 	const res = await target.register(this.id, data);
-	if (res || typeof res === 'undefinde') { // 不返回则默认成功；
+	if (typeof res === 'undefined' || res) { // 不返回则默认成功；
 		this.services.push(service);
 	} else {
 		this.sendError(res, service, id);
@@ -88,7 +88,7 @@ async function register({ service, data, id }) {
  */
 function cancel({ service }) {
 	if (!this.services.includes(service)) return;
-	this.services = this.services.filter(s=>s !== service);
+	this.services = this.services.filter(s => s !== service);
 	const target = services[service];
 	if (!target) return;
 	target.cancel(this.id);

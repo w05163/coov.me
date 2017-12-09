@@ -19,16 +19,19 @@ class Webrtc extends serviceBase {
 		const ids = this.opt.getRoom(key);
 		this.opt.join(id, key);
 		this.opt.broadcast(key, {
-			'eventName': '_new_peer',
-			'data': {
-				'socketId': id
+			eventName: '_new_peer',
+			data: {
+				socketId: id
 			}
 		}, id);
 		this.opt.send(id, {
-			'eventName': '_peers',
-			'data': {
-				'connections': ids,
-				'you': id
+			eventName: '_peers',
+			data: {
+				connections: ids,
+				you: id,
+				iceServer: [{
+					url: 'stun:stun.l.google.com:19302'// "stun:stun.services.mozilla.com"//stun:stun.l.google.com:19302
+				}]
 			}
 		});
 	}
@@ -39,11 +42,11 @@ class Webrtc extends serviceBase {
 	 */
 	cancel(id) {
 		const rooms = this.opt.getSocketRooms(id);
-		rooms.forEach(room => {
+		rooms.forEach((room) => {
 			this.opt.broadcast(room, {
-				'eventName': '_new_peer',
-				'data': {
-					'socketId': id
+				eventName: '_new_peer',
+				data: {
+					socketId: id
 				}
 			}, id);
 			this.opt.leave(id, room);
@@ -78,11 +81,11 @@ class Webrtc extends serviceBase {
 	 */
 	iceCandidate(id, data) {
 		this.opt.send(data.socketId, {
-			'eventName': '_ice_candidate',
-			'data': {
-				'label': data.label,
-				'candidate': data.candidate,
-				'socketId': id
+			eventName: '_ice_candidate',
+			data: {
+				label: data.label,
+				candidate: data.candidate,
+				socketId: id
 			}
 		});
 	}
@@ -94,10 +97,10 @@ class Webrtc extends serviceBase {
 	 */
 	offer(id, data) {
 		this.opt.send(data.socketId, {
-			'eventName': '_offer',
-			'data': {
-				'sdp': data.sdp,
-				'socketId': id
+			eventName: '_offer',
+			data: {
+				sdp: data.sdp,
+				socketId: id
 			}
 		});
 	}
@@ -109,10 +112,10 @@ class Webrtc extends serviceBase {
 	 */
 	answer(id, data) {
 		this.opt.send(data.socketId, {
-			'eventName': '_answer',
-			'data': {
-				'sdp': data.sdp,
-				'socketId': id
+			eventName: '_answer',
+			data: {
+				sdp: data.sdp,
+				socketId: id
 			}
 		});
 	}

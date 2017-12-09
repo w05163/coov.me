@@ -3,6 +3,6 @@
  */
 import webrtc from './webrtc';
 
-export default [
+export default {
 	webrtc
-];
+};
