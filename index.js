@@ -15,7 +15,7 @@ app.use(staticMiddleware(config.staticPath)); // 设置静态资源目录
 app.use(router.routes());// 路由
 
 
-app.use(ctx => {
+app.use((ctx) => {
 	ctx.body = '没有匹配到任何内容';
 });
 

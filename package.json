@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./ -d _build --ignore node_modules,public,temp,bin",
-    "dev": "devtool bin/www app,db,lib,model,service,websocket,config.js,index.js --watch --no-browser-globals",
-    "dev-chrome": "node --inspect-brk bin/www"
+    "dev": "devtool index app,db,lib,model,service,websocket,config.js,index.js --watch --no-browser-globals",
+	"dev-chrome": "node --inspect-brk bin/www",
+	"run":"node --experimental-modules --loader ./custom-loader.mjs ./index.js",
+	"ser-run":"pm2 start index.js --node-args=\"--experimental-modules --loader ./custom-loader.mjs ./index.js\""
   },
   "keywords": [
     "koa"
