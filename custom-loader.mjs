@@ -2,6 +2,7 @@ import url from 'url';
 import path from 'path';
 import process from 'process';
 import fs from 'fs';
+import os from 'os';
 
 // 从package.json中
 // 的dependencies、devDependencies获取项目所需npm模块信息
@@ -9,6 +10,7 @@ const ROOT_PATH = process.cwd();
 const PKG_JSON_PATH = path.join(ROOT_PATH, 'package.json');
 const PKG_JSON_STR = fs.readFileSync(PKG_JSON_PATH, 'binary');
 const PKG_JSON = JSON.parse(PKG_JSON_STR);
+const OS_TYPE = os.type();
 // 项目所需npm模块信息
 const allDependencies = {
 	...PKG_JSON.dependencies || {},
@@ -60,7 +62,7 @@ export function resolve(specifier, parentModuleURL, defaultResolve) {
 	const resolved = new url.URL(specifier, parentModuleURL);
 	const ext = path.extname(resolved.pathname);
 	if (!ext) { // 可能是一个目录
-		const pathname = path.join(resolved.pathname).slice(1);
+		const pathname = path.join(resolved.pathname).slice(OS_TYPE === 'Windows_NT' ? 1 : 0);
 		if (projectDirs.includes(pathname)) {
 			return {
 				url: `${resolved.href}${path.sep}index.js`,
