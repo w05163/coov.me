@@ -1,7 +1,7 @@
 const cacheStorageKey = 'minimal-pwa-1';
 const cacheList = [
 	'index.html',
-	'https://static-1252458005.file.myqcloud.com/log/index.js.gz?sign=Lys3+hILk13/qLSB5WTFOvUcC0VhPTEyNTI0NTgwMDUmaz1BS0lEZURib3JqM3ZwWkJmQld1ZVM1YzljMkNCeW1UemJWVUgmZT0xNTE1NDAzOTc1JnQ9MTUxMjgxMTk3NSZyPTExODM0ODAzNyZmPS9sb2cvaW5kZXguanMuZ3omYj1zdGF0aWM=',
+	'https://static-1252458005.file.myqcloud.com/log/index.js.gz?sign=DTQLVgCR+Q/zvO2RzXXrFjoEiWFhPTEyNTI0NTgwMDUmaz1BS0lEZURib3JqM3ZwWkJmQld1ZVM1YzljMkNCeW1UemJWVUgmZT0xNTE1NjgwNDM3JnQ9MTUxMzA4ODQzNyZyPTc0NDM4NTEzJmY9L2xvZy9pbmRleC5qcy5neiZiPXN0YXRpYw==',
 	'https://static-1252458005.cosgz.myqcloud.com/icon.woff?sign=bT/WTXbjXcAGvh9KXJBvUIKTyr5hPTEyNTI0NTgwMDUmaz1BS0lEZURib3JqM3ZwWkJmQld1ZVM1YzljMkNCeW1UemJWVUgmZT0xNTEzMTc1NDM3JnQ9MTUxMDU4MzQzNyZyPTM2NTM2OTg5NSZmPS9pY29uLndvZmYmYj1zdGF0aWM='
 ];
 
