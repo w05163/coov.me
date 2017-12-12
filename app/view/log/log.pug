@@ -1,0 +1,13 @@
+//- 小日志
+extends ../component/head.pug
+
+block scripts
+	link(rel="manifest" href="manifest.json")
+	style
+		include ../component/icon.css
+	script
+		include ../component/sw.js
+block body
+	body
+		div(id="app")
+	script(src=coov.staticPath + 'log/index.js.gz?sign=Lys3+hILk13/qLSB5WTFOvUcC0VhPTEyNTI0NTgwMDUmaz1BS0lEZURib3JqM3ZwWkJmQld1ZVM1YzljMkNCeW1UemJWVUgmZT0xNTE1NDAzOTc1JnQ9MTUxMjgxMTk3NSZyPTExODM0ODAzNyZmPS9sb2cvaW5kZXguanMuZ3omYj1zdGF0aWM=')
