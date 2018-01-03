@@ -2,9 +2,9 @@
 extends ../component/head.pug
 
 block scripts
-	- coov.staticPath = 'https://coov.me/rtc/'
-	link(rel="stylesheet" type="text/css" media="screen" href=coov.staticPath + "css/j.css")
-	script(src=coov.staticPath + 'js/material.js' defer="defer")
+	- coov.staticRoot = 'https://coov.me/rtc/'
+	link(rel="stylesheet" type="text/css" media="screen" href=coov.staticRoot + "css/j.css")
+	script(src=coov.staticRoot + 'js/material.js' defer="defer")
 	script(src="xgs/index.js" defer="defer")
 	style
 		include xgs.css
@@ -12,7 +12,7 @@ block body
 	body(class="dark-theme")
 		div(class="xgj")
 			div(id="xgj_alert") 你好，我是西瓜精！
-			img(id="xgj" src=coov.staticPath + "img/xgj.png")
+			img(id="xgj" src=coov.staticRoot + "img/xgj.png")
 			div(class="fab_view")
 				button(class="fab color-blue-500" id="send_file")
 					i(class="icon-folder")
