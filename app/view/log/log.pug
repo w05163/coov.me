@@ -5,7 +5,8 @@ block scripts
 	link(rel="manifest" href=staticRoot + 'manifest.json')
 	style
 		include ../component/icon.css
-	include ../component/sw.pug
+	script
+		include ../component/sw.js
 block body
 	body
 		div(id="app")
