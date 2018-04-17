@@ -3,7 +3,7 @@
  */
 import ws from 'ws';
 import config from '../config';
-import { randomString } from '../lib/string';
+import { randomString } from '../util/string';
 import strengthen from './strengthen';
 import listen from './listen';
 import { init as operatorInit } from './operator';

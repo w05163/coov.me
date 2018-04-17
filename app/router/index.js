@@ -2,7 +2,7 @@
  * 路由配置
  */
 import Router from 'koa-router';
-import { supplementPath } from './tool';
+import { supplementPath } from '../../util/router';
 import main from './main';
 import api from './api';
 

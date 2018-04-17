@@ -1,5 +1,5 @@
 /**
- * 只在router目录内使用的共有工具方法
+ * router目录内使用的共有工具方法
  */
 
 
@@ -10,9 +10,9 @@
  * @return {Array}
  */
 export function supplementPath(routers, key, ...dirs) {
-	return routers.map(r => {
-		let tem = {
-			path: dirs.join('/') + '/' + r[key]
+	return routers.map((r) => {
+		const tem = {
+			path: `${dirs.join('/')}/${r[key]}`
 		};
 		return Object.assign({}, r, tem);
 	});

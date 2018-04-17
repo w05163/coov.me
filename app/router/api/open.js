@@ -1,6 +1,7 @@
 /**
  * 所有不需要鉴权的接口配置
  */
+import openController from '../../controller/open';
 
 const routers = [
 	{

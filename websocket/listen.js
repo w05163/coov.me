@@ -1,5 +1,5 @@
 import services from './service';
-import { randomString } from '../lib/string';
+import { randomString } from '../util/string';
 import config from '../config';
 
 const { ws: { types } } = config;
