@@ -11,13 +11,13 @@ const viewPath = 'app/view';
  * @param {Object} router
  * @return {Object}
  */
-function transformToStandard({ path, template, params, fun }) {
+function transformToStandard({ path, template, params, controller }) {
 	const compiledFunction = pug.compileFile(`${viewPath}${path}${template}`);
 	return {
 		method: 'get',
 		path,
-		fun: (ctx) => {
-			const newParams = typeof fun === 'function' ? fun(ctx) : null;
+		controller: (ctx) => {
+			const newParams = typeof controller === 'function' ? controller(ctx) : null;
 			ctx.body = compiledFunction(Object.assign({}, params, newParams, { coov: config.page }));
 		}
 	};
@@ -37,7 +37,7 @@ const main = [
 				}
 			}
 		},
-		fun: ctx => null // 可选，返回模板需要的参数对象，返回的对象将会和params混合后传入渲染模板
+		controller: ctx => null // 可选，返回模板需要的参数对象，返回的对象将会和params混合后传入渲染模板
 	},
 	{
 		path: '/xgs/',

@@ -17,3 +17,22 @@ export function supplementPath(routers, key, ...dirs) {
 		return Object.assign({}, r, tem);
 	});
 }
+
+/**
+ * 把controller转换成路由
+ * @param {object} controller
+ */
+export function controllerMapToRouter(controller) {
+	const routers = [];
+	Object.keys(controller).forEach((method) => {
+		Object.keys(controller[method]).forEach((name) => {
+			routers.push({
+				des: name,
+				name,
+				method,
+				controller: controller[method][name]
+			});
+		});
+	});
+	return routers;
+}

@@ -1,6 +1,8 @@
 /**
  * 各种服务端和客户端的配置
  */
+import privacy from './privacy';
+
 export default {
 	port: 443, // 服务器端口
 	staticPath: 'public', // 静态资源目录
@@ -13,5 +15,10 @@ export default {
 		maxPayload: 1024 * 1024 * 2, // 单个massage的最大长度
 		interval: 30 * 1000, // 心跳包间隔
 		types: ['register', 'cancel', 'msg', 'request'], // 客户端允许发送的事件
-	}
+	},
+	dbPath: 'mongodb://localhost:27017',
+	dbName: 'coov',
+	debug: process.env.NODE_ENV !== 'production',
+	miniAppId: 'wx9957c05e533ba562',
+	...privacy
 };

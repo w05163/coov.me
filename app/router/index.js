@@ -17,7 +17,7 @@ const router = new Router();
  * @param {Array} routers 路由数组
  */
 function forRouters(routers) {
-	routers.forEach(r => router[r.method](r.path, r.fun));
+	routers.forEach(r => router[r.method](r.path, r.controller));
 }
 
 forRouters(main);

@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import config from '../../config';
-import './schema/info';
+import './schema/cache';
+import './schema/user';
+import './schema/role';
+import './schema/permission';
 
 mongoose.Promise = Promise;
 
