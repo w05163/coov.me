@@ -2,6 +2,7 @@
  * 提供缓存服务
  */
 import mongoose from 'mongoose';
+import { keysForEach } from '../../util/object';
 
 const Cache = mongoose.model('cache');
 
@@ -27,5 +28,22 @@ export async function setCache(key, expireIn = 5, data) {
  */
 export async function getCache(key) {
 	const res = await Cache.findById(key);
-	return res.data;
+	return res ? res.data : undefined;
+}
+
+/**
+ * 更新缓存
+ * 所传的data如果是object，则合并到现有缓存，如果是其他类型(包括Array)，则覆盖现有
+ * @param {String} key
+ * @param {any} data
+ */
+export async function updateCache(key, data) {
+	const newData = {};
+	if (typeof data === 'object' && !Array.isArray(data)) {
+		keysForEach(data, (k, v) => newData[`data.${k}`] = v);
+	} else {
+		newData.data = data;
+	}
+	const res = await Cache.updateOne({ _id: key }, newData, { upsert: false });
+	return res;
 }

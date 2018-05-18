@@ -41,6 +41,7 @@ const projectDirs = getAllDir(ROOT_PATH);
 
 export function resolve(specifier, parentModuleURL, defaultResolve) {
 	// 判断是否为Node原生模块
+	// console.log('加载', specifier, parentModuleURL, defaultResolve);
 	if (builtins.has(specifier)) {
 		return {
 			url: specifier,
@@ -87,4 +88,10 @@ export function resolve(specifier, parentModuleURL, defaultResolve) {
 			format: 'json'
 		};
 	}
+	console.log('无一命中', specifier, parentModuleURL, defaultResolve);
+
+	return {
+		url: resolved.href,
+		format: 'esm'
+	};
 }

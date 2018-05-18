@@ -9,12 +9,14 @@ import bodyParser from 'koa-bodyparser';
 import config from './config';
 import DBInit from './app/db';
 import router from './app/router';
+import authorization from './middleware/auth';
 import socketInit from './websocket';
 
 const app = new Koa();
 DBInit();// 数据库初始化
 app.use(staticMiddleware(config.staticPath)); // 设置静态资源目录
 app.use(bodyParser());
+app.use(authorization);
 app.use(router.routes());// 路由
 
 app.use((ctx) => {

@@ -2,8 +2,9 @@
  * 与微信交互的服务
  */
 import request from 'request-promise-native';
-import config from '../../config';
-import CodeError from '../../util/error';
+import config from '../../../config';
+import CodeError from '../../../util/error';
+import WXBizDataDecryptData from './WXBizDataCrypt';
 
 
 const mini = {
@@ -21,4 +22,6 @@ export const miniServices = {
 		}
 	}
 };
+
+export { WXBizDataDecryptData };
 
