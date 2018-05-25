@@ -3,6 +3,8 @@
  */
 import mongoose from 'mongoose';
 import { keysForEach } from '../../util/object';
+import CodeError from '../../util/error';
+import { catchError } from '../../util/function';
 
 const Cache = mongoose.model('cache');
 
@@ -12,7 +14,7 @@ const Cache = mongoose.model('cache');
  * @param {Number} expireIn 过期时间，以分钟为单位
  * @param {*} data
  */
-export async function setCache(key, expireIn = 5, data) {
+export const setCache = catchError(402)(async (key, expireIn = 5, data) => {
 	if (expireIn <= 0) {
 		return Cache.remove({ key });
 	}
@@ -20,16 +22,16 @@ export async function setCache(key, expireIn = 5, data) {
 	const cache = new Cache({ _id: key, expireAt, data });
 	const res = await Cache.updateOne({ _id: key }, cache, { upsert: true });
 	return res;
-}
+});
 
 /**
  * 获取缓存
  * @param {String} key
  */
-export async function getCache(key) {
+export const getCache = catchError(403)(async (key) => {
 	const res = await Cache.findById(key);
 	return res ? res.data : undefined;
-}
+});
 
 /**
  * 更新缓存
@@ -37,7 +39,7 @@ export async function getCache(key) {
  * @param {String} key
  * @param {any} data
  */
-export async function updateCache(key, data) {
+export const updateCache = catchError(404)(async (key, data) => {
 	const newData = {};
 	if (typeof data === 'object' && !Array.isArray(data)) {
 		keysForEach(data, (k, v) => newData[`data.${k}`] = v);
@@ -46,4 +48,4 @@ export async function updateCache(key, data) {
 	}
 	const res = await Cache.updateOne({ _id: key }, newData, { upsert: false });
 	return res;
-}
+});

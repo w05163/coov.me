@@ -2,13 +2,22 @@
 import CodeError from '../../util/error';
 import { miniServices } from '../service/weixin';
 import { setCache, getCache } from '../service/cache';
-import { getUserByOpenId, createUserByOpenId, login } from '../service/user';
+import { getUserByOpenId, getUserByName, createUserByOpenId, login, verifyAccountAndPassword } from '../service/user';
 
 export default {
 	get: {
 
 	},
 	post: {
+		async login(ctx) {
+			const { password, account } = ctx.request.body;
+			const user = await verifyAccountAndPassword(account, password);
+			if (user) {
+				const token = await login(user);
+				return { token };
+			}
+			throw new CodeError(601);
+		},
 		async getOpenId(ctx) {
 			const { code } = ctx.request.body;
 			const res = await miniServices.codeSession(code);
@@ -25,6 +34,11 @@ export default {
 			} else {
 				throw new CodeError(601, '微信登录失败');
 			}
+		},
+		async checkUserName(ctx) { // 校验用户名是否存在
+			const { username } = ctx.request.body;
+			const user = await getUserByName(username);
+			return { existed: !!user };
 		}
 	},
 	delete: {

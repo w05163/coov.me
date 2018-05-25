@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import config from '../../config';
 import { WXBizDataDecryptData } from '../service/weixin';
 import { updateUser } from '../service/user';
+import CodeError from '../../util/error';
+import { md5 } from '../../util/string';
 
 const User = mongoose.model('user');
 
@@ -48,6 +50,16 @@ export default {
 			const data = WXBizDataDecryptData(user.sessionKey, config.miniAppId, encryptedData, iv);
 			const updateData = { mobile: data.mobile, verifyMobile: true };
 			const info = await updateUser(user._id, updateData, token);
+			return filterUserData(info);
+		},
+		async updateUsername(ctx) {
+			const { body, user, header } = ctx.request;
+			const { authorization: token } = header;
+			const { name, password } = body;
+			const data = { name };
+			if (password && user.password) throw new CodeError(602);
+			if (password) data.password = md5(password);
+			const info = await updateUser(user._id, data, token);
 			return filterUserData(info);
 		}
 	},
