@@ -16,8 +16,10 @@ export default {
 		interval: 30 * 1000, // 心跳包间隔
 		types: ['register', 'cancel', 'msg', 'request'], // 客户端允许发送的事件
 	},
-	dbPath: 'mongodb://localhost:27017',
+	dbHost: 'localhost',
+	dbPort: '27017',
 	dbName: 'coov',
+	dbUsername: 'coov',
 	debug: process.env.NODE_ENV !== 'production',
 	miniAppId: 'wx9957c05e533ba562',
 	...privacy

@@ -1,40 +1,41 @@
 {
-  "name": "coov.me",
-  "version": "0.0.1",
-  "description": "个人网站",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "devtool index app,db,lib,model,service,websocket,config.js,index.js --watch --no-browser-globals",
-	"dev-chrome": "node --inspect-brk bin/www",
-	"start-db": "/\"Program Files\"/MongoDB/Server/3.2/bin/mongod.exe",
-    "start": "nodemon --inspect-brk --experimental-modules --loader ./custom-loader.mjs ./index.js",
-    "ser-run": "pm2 start index.js --node-args=\"--experimental-modules --loader ./custom-loader.mjs ./index.js\""
-  },
-  "keywords": [
-    "koa"
-  ],
-  "author": "wu",
-  "license": "ISC",
-  "dependencies": {
-    "graphql": "^0.13.2",
-    "graphql-server-koa": "^1.3.5",
-    "koa": "^2.2.0",
-    "koa-bodyparser": "^2.5.0",
-    "koa-router": "^7.2.0",
-    "koa-static": "^3.0.0",
-    "mongoose": "^5.0.15",
-    "pug": "^2.0.0-rc.2",
-    "request": "^2.85.0",
-    "request-promise-native": "^1.0.5",
-    "ws": "^3.1.0"
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.0.1",
-    "eslint": "^4.10.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0"
-  }
+	"name": "coov.me",
+	"version": "0.0.1",
+	"description": "个人网站",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "devtool index app,db,lib,model,service,websocket,config.js,index.js --watch --no-browser-globals",
+		"dev-chrome": "node --inspect-brk bin/www",
+		"start-db": "/\"Program Files\"/MongoDB/Server/3.2/bin/mongod.exe --auth",
+		"run-db": "/usr/local/mongodb/bin/mongod --config /usr/local/mongodb/bin/mongodb.conf",
+		"start": "nodemon --inspect-brk --experimental-modules --loader ./custom-loader.mjs ./index.js",
+		"ser-run": "pm2 start index.js --node-args=\"--experimental-modules --loader ./custom-loader.mjs ./index.js\""
+	},
+	"keywords": [
+		"koa"
+	],
+	"author": "wu",
+	"license": "ISC",
+	"dependencies": {
+		"graphql": "^0.13.2",
+		"graphql-server-koa": "^1.3.5",
+		"koa": "^2.2.0",
+		"koa-bodyparser": "^2.5.0",
+		"koa-router": "^7.2.0",
+		"koa-static": "^3.0.0",
+		"mongoose": "^5.0.15",
+		"pug": "^2.0.0-rc.2",
+		"request": "^2.85.0",
+		"request-promise-native": "^1.0.5",
+		"ws": "^3.1.0"
+	},
+	"devDependencies": {
+		"babel-eslint": "^8.0.1",
+		"eslint": "^4.10.0",
+		"eslint-config-airbnb": "^16.1.0",
+		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-jsx-a11y": "^6.0.2",
+		"eslint-plugin-react": "^7.4.0"
+	}
 }

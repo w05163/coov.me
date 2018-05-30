@@ -6,8 +6,8 @@ import './schema/role';
 import './schema/permission';
 
 mongoose.Promise = Promise;
-
-const DBFullPath = `${config.dbPath}/${config.dbName}`;
+const { dbPort, dbHost, dbName, dbPassword, dbUsername } = config;
+const DBFullPath = `mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
 function DBInit() {
   mongoose.set('debug', config.debug);
 
