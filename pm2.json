@@ -1,0 +1,10 @@
+{
+  "name": "coov",
+  "script": "./index.js",
+  "cwd": "./",
+  "node_args": "--experimental-modules --loader ./custom-loader.mjs ./index.js",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
+

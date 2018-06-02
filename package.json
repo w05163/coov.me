@@ -10,7 +10,7 @@
 		"start-db": "/\"Program Files\"/MongoDB/Server/3.2/bin/mongod.exe --auth",
 		"run-db": "/usr/local/mongodb/bin/mongod --config /usr/local/mongodb/bin/mongodb.conf",
 		"start": "nodemon --inspect-brk --experimental-modules --loader ./custom-loader.mjs ./index.js",
-		"ser-run": "pm2 start index.js --node-args=\"--experimental-modules --loader ./custom-loader.mjs ./index.js\""
+		"ser-run": "pm2 start pm2.json"
 	},
 	"keywords": [
 		"koa"
