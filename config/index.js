@@ -22,5 +22,8 @@ export default {
 	dbUsername: 'coov',
 	debug: process.env.NODE_ENV !== 'production',
 	miniAppId: 'wx9957c05e533ba562',
+	cors: {
+		origin: ['http://localhost:3000']
+	},
 	...privacy
 };
