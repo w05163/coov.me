@@ -3,12 +3,9 @@
  */
 import errorCode from '../../../config/error';
 import CodeError from '../../../util/error';
-import { supplementPath } from '../../../util/router';
-import openRouter from './open';
-import userRouter from './user';
-
-const open = supplementPath(openRouter, 'name', 'open');
-const user = supplementPath(userRouter, 'name', 'user');
+import { supplementPath, controllerMapToRouter } from '../../../util/router';
+import openController from '../../controller/open';
+import userController from '../../controller/user';
 
 
 function apiBodyExtend(routers) {
@@ -42,6 +39,6 @@ function apiBodyExtend(routers) {
 }
 
 export default apiBodyExtend([
-	...open,
-	...user
+	...supplementPath(controllerMapToRouter(openController), 'name', 'open'),
+	...supplementPath(controllerMapToRouter(userController), 'name', 'user')
 ]);

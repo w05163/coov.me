@@ -58,7 +58,6 @@ export default {
 			const { name, password } = body;
 			const data = { name };
 			if (password && user.password) throw new CodeError(602);
-			if (password) data.password = md5(password);
 			const info = await updateUser(user._id, data, token);
 			return filterUserData(info);
 		}

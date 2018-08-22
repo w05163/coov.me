@@ -15,11 +15,7 @@ const baseSchema = {
 	updated_at: {
 		type: Date,
 		default: Date.now()
-	},
-	auth_w: [{ type: Schema.Types.ObjectId, ref: 'user' }],
-	auth_r: [{ type: Schema.Types.ObjectId, ref: 'user' }],
-	auth_wr: [{ type: Schema.Types.ObjectId, ref: 'role' }], // 写权限角色
-	auth_rr: [{ type: Schema.Types.ObjectId, ref: 'role' }], // 读权限角色
+	}
 };
 
 export const pre = {
@@ -34,7 +30,7 @@ export const pre = {
 		next();
 	},
 	update() {
-		this.update({}, { $set: { updatedAt: new Date() } });
+		this.update({}, { $set: { updated_at: new Date() } });
 	},
 	findOneAndUpdate() {
 		// 中间件
